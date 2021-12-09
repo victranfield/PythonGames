@@ -1,8 +1,15 @@
-from PlayingCard import *
+from src.PlayingCard import *
+from src.ConsoleInput import ConsoleInput
+from src.ConsoleOutput import ConsoleOutput
 import time
 
 user_hand = 0
 computer_hand = 1
+game_input = ConsoleInput()
+game_output = ConsoleOutput()
+
+def set_game_input(new_input):
+    game_input = new_input
 
 # Function: initialise_score
 # Description: Initialises who turn it is the computer of the user and how many winning hands
@@ -27,7 +34,7 @@ def play_card(current_score, hands, counter):
         # user
         next_card = deal_a_card(hands[user_hand])
         prompt = "You played "
-    print(prompt + next_card)
+    game_output.display(prompt + next_card)
     return next_card
 
 # Method: determine_winner
@@ -35,20 +42,20 @@ def play_card(current_score, hands, counter):
 # it in a given time set by the user.
 def determine_winner(current_score, previous_card, next_card, answer, waited, seconds_to_wait):
     if answer == "S" and is_snap(previous_card, next_card) and waited < seconds_to_wait:
-        print("Correct you win in " + str(waited))
+        game_output.display("Correct you win in " + str(waited))
         current_score[user_hand]["score"] += 1
-        print("You have won " + str(current_score[user_hand]["score"]) + " hands")
+        game_output.display("You have won " + str(current_score[user_hand]["score"]) + " hands")
     elif answer == "S" and is_snap(previous_card, next_card) and waited > seconds_to_wait:
-        print("Sorry to slow you waited " + str(waited))
-        print("Computer wins")
+        game_output.display("Sorry to slow you waited " + str(waited))
+        game_output.display("Computer wins")
         current_score[computer_hand]["score"] += 1
-        print("Computer has won " + str(current_score[computer_hand]["score"]) + " hands")
+        game_output.display("Computer has won " + str(current_score[computer_hand]["score"]) + " hands")
     elif answer == "S" and not is_snap(previous_card, next_card):
-        print("Wrong the cards are different")
+        game_output.display("Wrong the cards are different")
     elif answer == "N" and is_snap(previous_card, next_card):
-        print("Computer wins")
+        game_output.display("Computer wins")
         current_score[computer_hand]["score"] += 1
-        print("Computer has won " + str(current_score[computer_hand]["score"]) + " hands")
+        game_output.display("Computer has won " + str(current_score[computer_hand]["score"]) + " hands")
 
 # Method: main
 # Description: The main logic for snap given a hands of cards and a wait time.
@@ -61,7 +68,7 @@ def snap(hands, seconds_to_wait):
         previous_card = next_card
         next_card = play_card(current_score, hands, counter)
         start = time.time()
-        answer = input("Please enter (S)nap or (N)ext")
+        answer = game_input.get_string("Please enter (S)nap or (N)ext")
         waited = time.time() - start
         determine_winner(current_score, previous_card, next_card, answer.upper(), waited, seconds_to_wait)
         counter += 1
@@ -69,8 +76,8 @@ def snap(hands, seconds_to_wait):
 def main():
     deck = generate_deck()
     deck = shuffle_cards(deck)
-    print("We will play snap to match on suites")
-    seconds_to_wait = int(input("Please enter the number of seconds to wait"))
+    game_output.display("We will play snap to match on suites")
+    seconds_to_wait = int(game_input.get_string("Please enter the number of seconds to wait"))
     # The next function returns two hands of cards. It has a full deck of cards as an input. The number of cards to deal
     # is zero so all cards are dealt to the two players. The last parameter is an empty list since the players have not
     # already been dealt any cards.

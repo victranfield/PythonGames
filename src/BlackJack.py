@@ -1,5 +1,7 @@
 import random
-from PlayingCard import *
+from src.PlayingCard import *
+from src.ConsoleInput import ConsoleInput
+from src.ConsoleOutput import ConsoleOutput
 
 """Constant values to be references in the functions and methods below."""
 winning_score = 21
@@ -7,6 +9,12 @@ face_card_score = 10
 max_ace_score = 11
 min_ace_score = 1
 good_number_of_cards = 5
+game_input = ConsoleInput()
+game_output = ConsoleOutput()
+
+def set_game_input(new_input):
+    global game_input
+    game_input = new_input
 
 def score_hand(hand):
     """Score an individual hand of playing cards. We add each card score to a total. All face cards King, Queen
@@ -44,9 +52,9 @@ def valid_deal_input():
  returns the answer in upper case. A while loop is used to prompt the user till the enter a valid response"""
     """Function to get a valid user input for the deal_to_user function"""
     allowed_answers = ["D", "S"]
-    answer = input("Please select (D)raw or (S)tick: ")
+    answer = game_input.get_string("Please select (D)raw or (S)tick: ")
     while answer.upper() not in allowed_answers:
-        answer = input("That is not a valid input. Please select (D)raw or (S)tick: ")
+        answer = game_input.get_string("That is not a valid input. Please select (D)raw or (S)tick: ")
     return answer.upper()
 
 def deal_to_user(deck, hand):
@@ -55,12 +63,13 @@ def deal_to_user(deck, hand):
  and are bust. In this case we move on."""
     answer = "D"
     while answer == "D":
-        print("Your hand is", hand)
+        game_output.display("Your hand is")
+        game_output.display(hand)
         answer = valid_deal_input()
         if answer == "D":
             if not deal_to_player(deck, hand):
                 answer = "F"
-                print("Sorry you have gone over the score and are bust", hand)
+                game_output.display("Sorry you have gone over the score and are bust", hand)
 
 
 def find_winner(hands):
@@ -113,15 +122,15 @@ def black_jack(deck, hands, computer_risk):
     deal_to_computer(deck, hands, computer_risk)
     players = find_winner(hands)
     if len(players) == 1:
-        print("Player " + str(players[0]) + " is the winner")
+        game_output.display("Player " + str(players[0]) + " is the winner")
     else:
         for player in players:
-            print("Player " + str(player) + " draw")
-    print(hands)
+            game_output.display("Player " + str(player) + " draw")
+    game_output.display(hands)
 
 def main():
     """"Get the number of players, generate the deck of cards and work out the computer players risk."""
-    number_of_players = int(input("Please enter the number of players, max is six"))
+    number_of_players = int(game_input.get_string("Please enter the number of players, max is six"))
     deck = generate_deck()
     deck = shuffle_cards(deck)
     hands = deal_cards(deck, 2, number_of_players)
