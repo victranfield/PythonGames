@@ -9,6 +9,7 @@ game_input = ConsoleInput()
 game_output = ConsoleOutput()
 
 def set_game_input(new_input):
+    global game_input
     game_input = new_input
 
 # Function: initialise_score
