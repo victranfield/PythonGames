@@ -62,3 +62,12 @@ class TestBlackJack(TestCase):
         set_game_input(self.input)
         # blackjack using testing input
         self.assertEqual("S", valid_deal_input())
+
+    def test_deal_to_user_D(self):
+        self.input.set_list_of_test_input(["D"])
+        deck = generate_deck()
+        hand = ["HK", "CQ"]
+        deal_to_user(deck, hand)
+        # checking if card has been dealt - so list is empty
+        self.assertEqual([], self.output.list_of_test_output)
+
