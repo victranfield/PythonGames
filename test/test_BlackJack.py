@@ -49,3 +49,16 @@ class TestBlackJack(TestCase):
         set_game_input(self.input)
         #blackjack using testing input
         self.assertEqual("D", valid_deal_input())
+
+    def test_valid_deal_input_Y_S(self):
+
+        self.input.set_list_of_test_input(["Y", "S"])
+        set_game_input(self.input)
+        # blackjack using testing input
+        self.assertEqual("S", valid_deal_input())
+
+    def test_valid_deal_input_s_lower(self):
+        self.input.set_list_of_test_input(["Y", "s"])
+        set_game_input(self.input)
+        # blackjack using testing input
+        self.assertEqual("S", valid_deal_input())
