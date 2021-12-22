@@ -69,7 +69,7 @@ def deal_to_user(deck, hand):
         if answer == "D":
             if not deal_to_player(deck, hand):
                 answer = "F"
-                game_output.display("Sorry you have gone over the score and are bust", hand)
+                game_output.display("Sorry you have gone over the score and are bust")
 
 
 def find_winner(hands):
