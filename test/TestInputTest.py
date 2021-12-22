@@ -1,7 +1,9 @@
 import unittest
 from src.TestInput import TestInput
 
-class MyTestCase(unittest.TestCase):
+
+class TestInputTest(unittest.TestCase):
+
     input = TestInput()
 
     def test_get_string_first(self):
