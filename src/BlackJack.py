@@ -58,7 +58,7 @@ def valid_deal_input():
     return answer.upper()
 
 def deal_to_user(deck, hand):
-    """The user will be displayed their hand and can either request to be dealt a new ard from the deck or they
+    """The user will be displayed their hand and can either request to be dealt a new card from the deck or they
  can stick so stop and move on. When you are dealt a card we determine the score, if you go over the limit 21 you loose
  and are bust. In this case we move on."""
     answer = "D"
@@ -69,7 +69,7 @@ def deal_to_user(deck, hand):
         if answer == "D":
             if not deal_to_player(deck, hand):
                 answer = "F"
-                game_output.display("Sorry you have gone over the score and are bust")
+                game_output.display(f"Sorry you have gone over the score and are bust {hand}")
 
 
 def find_winner(hands):
