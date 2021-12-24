@@ -5,7 +5,6 @@ class TestOutput(Output):
     list_of_test_output = []
 
     def get_list_of_test_output(self, list_of_test_output):
-        # return self.list_of_test_output
         self.list_of_test_output = list_of_test_output
 
     def display(self, message):
